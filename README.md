@@ -48,7 +48,7 @@ Clona el repositorio:
 
 ```bash
 git clone https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git
-cd aplicacion-practicadocker
+cd JosePalenzuela-practicaDOCKER
 ```
 
 Construye las imágenes Docker:
