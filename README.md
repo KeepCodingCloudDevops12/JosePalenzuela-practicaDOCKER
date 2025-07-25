@@ -47,7 +47,7 @@ Además, ofrece endpoints API para consultar el contador sin modificarlo.
 Clona el repositorio:
 
 ```bash
-git clone https://github.com/jpalenz77/aplicacion-practicadocker.git
+git clone https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git
 cd aplicacion-practicadocker
 ```
 
