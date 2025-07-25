@@ -18,9 +18,7 @@ WORKDIR /app
 COPY --from=build /root/.local /root/.local
 COPY . .
 
-# Puerto expuesto para Prometheus
-EXPOSE 5010
+EXPOSE 5010 
 
-CMD ["python", "app.py"]
-
-
+# Usar Gunicorn para servir la aplicación Flask
+CMD ["gunicorn", "--bind", "0.0.0.0:5010", "app:app"]
