@@ -18,7 +18,7 @@ def get_conn():
     )
 
 @app.route('/')
-def index_text(): # Esta ruta ya no será usada directamente por el frontend (Nginx servirá index.html)
+def index_text(): 
     conn = get_conn()
     cur = conn.cursor()
     cur.execute('UPDATE contador SET visitas = visitas + 1 RETURNING visitas;')
@@ -38,7 +38,6 @@ def reset():
     conn.close()
     return 'Contador reiniciado.'
 
-# NUEVA RUTA PARA INCREMENTAR VIA API
 @app.route('/api/increment')
 def api_increment():
     conn = get_conn()
@@ -60,12 +59,6 @@ def api_contador():
     conn.close()
     return jsonify({'visitas': count})
 
-# La ruta /api (que no tienes definida actualmente) también sería proxied a Flask
-# @app.route('/api')
-# def api_info():
-#     return jsonify({"message": "API endpoints: /api/increment, /api/contador, /reset"})
 
-if __name__ == '__main__':
-    # Usaremos Gunicorn para servir Flask en el Dockerfile,
-    # así que esta línea es principalmente para pruebas locales directas de app.py
+if __name__ == '__main__':    
     app.run(host='0.0.0.0', port=5010)
