@@ -1,4 +1,4 @@
-# Aplicación Práctica Docker - Contador con Flask y PostgreSQL
+# Aplicación Práctica Docker - Contador con Flask y PostgreSQL y Prometheus para consultar métricas
 
 Este proyecto es una práctica para aprender a desplegar una aplicación con microservicios usando Docker y Docker Compose. La aplicación es un contador sencillo que incrementa visitas en una base de datos PostgreSQL y expone una API REST para consultarlo.
 
