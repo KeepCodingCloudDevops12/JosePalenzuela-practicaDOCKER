@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  aplicacion-postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: chema
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: aplicaciondb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5432:5432"
+
+  aplicacion-flask:
+    build: .
+    depends_on:
+      - aplicacion-postgres
+    environment:
+      DB_HOST: aplicacion-postgres
+      DB_PORT: 5432
+      DB_NAME: aplicaciondb
+      DB_USER: chema
+      DB_PASS: admin123
+    ports:
+      - "5010:5010"
+
+volumes:
+  postgres_data:
+

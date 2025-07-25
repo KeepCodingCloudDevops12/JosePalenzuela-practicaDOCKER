@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS contador (
+    visitas INTEGER NOT NULL DEFAULT 0
+);
+
+INSERT INTO contador (visitas)
+SELECT 0
+WHERE NOT EXISTS (SELECT 1 FROM contador);
