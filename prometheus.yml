@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'aplicacion-flask'
+    static_configs:
+      - targets: ['aplicacion-flask:5010']
