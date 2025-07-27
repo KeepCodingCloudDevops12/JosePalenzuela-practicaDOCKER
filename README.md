@@ -65,7 +65,7 @@ Sigue estos pasos para poner la aplicación en funcionamiento en tu máquina loc
 
 1.  **Clona el repositorio:**
     ```bash
-    git clone [https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git](https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git)
+    git clone https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git
     cd JosePalenzuela-practicaDOCKER
     ```
 
