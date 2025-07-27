@@ -15,6 +15,7 @@ services:
 
   aplicacion-flask:
     build: .
+    image: aplicacion-flask
     depends_on:
       - aplicacion-postgres
     environment:
