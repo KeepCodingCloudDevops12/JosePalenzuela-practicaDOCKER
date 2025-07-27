@@ -279,10 +279,9 @@ En Grafana, ve a la sección "Explore" (el icono del telescopio en la barra late
   
 ---
 
-## Posibles Mejoras Adicionales (Para futuros desarrollos)
+## Posibles Mejoras
 
 * **Entornos de prueba y producción:** Crear archivos `docker-compose` específicos para entornos de desarrollo, prueba y producción, permitiendo configuraciones y versiones de servicios diferentes.
-* **Reducción del tamaño de la imagen (documentación):** Aunque ya se usa multistage, se podría documentar el tamaño de la imagen antes y después del multistage para demostrar la reducción.
 
 ---
 
