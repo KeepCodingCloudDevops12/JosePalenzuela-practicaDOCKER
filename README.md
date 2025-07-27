@@ -189,6 +189,30 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx) están config
 
 ---
 
+---
+
+## Seguridad: Escaneo de Vulnerabilidades con Trivy
+
+Hemos integrado el escaneo de imágenes Docker en busca de vulnerabilidades de seguridad utilizando [Trivy](https://aquasecurity.github.io/trivy/).
+
+### Cómo escanear:
+
+1.  **Instala Trivy** en tu sistema siguiendo las instrucciones oficiales (ej. `brew install trivy` en macOS, o consultando la [documentación de instalación de Trivy](https://aquasecurity.github.io/trivy/latest/getting-started/installation/)).
+2.  Asegúrate de que tu imagen `aplicacion-flask` esté construida localmente (ejecuta `docker compose build aplicacion-flask`).
+3.  Ejecuta el escaneo:
+    ```bash
+    trivy image aplicacion-flask
+    ```
+    Esto escaneará la imagen base (`python:3.10-slim-bookworm`) y todas las dependencias instaladas dentro de tu aplicación en busca de vulnerabilidades conocidas.
+
+### Interpretación de los Resultados:
+
+Trivy mostrará una lista de vulnerabilidades encontradas, clasificadas por severidad (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`). Cada entrada incluirá información como el ID de la vulnerabilidad (CVE), la versión instalada del componente vulnerable y la versión corregida si está disponible.
+
+Las vulnerabilidades más críticas (`CRITICAL` y `HIGH`) deben ser priorizadas para su resolución, generalmente actualizando la dependencia o imagen base a una versión que incluya la corrección.
+
+---
+
 ## Puntos Extra Implementados
 
 * **Monitorización con Prometheus:** Integrado para recolectar métricas de la aplicación Flask.
@@ -197,12 +221,12 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx) están config
 * **Uso de variables de entorno para accesos a BBDD:** La configuración de la base de datos se gestiona completamente a través de variables de entorno para mayor flexibilidad.
 * **Despliegue de Portainer:** Incluido en `docker-compose.yml` para una gestión visual de los contenedores Docker.
 * **Subida de imagen a Docker Hub:** La imagen de `aplicacion-flask` se ha subido a Docker Hub ([https://hub.docker.com/repository/docker/orejasperez/aplicacion-flask/general](https://hub.docker.com/repository/docker/orejasperez/aplicacion-flask/general)). Esto se realiza para cumplir con los requisitos de la práctica, sin embargo, el `docker-compose.yml` local sigue utilizando la construcción de la imagen desde el Dockerfile (`build: .`) y no hace referencia a la imagen de Docker Hub.
-
+* **Escaneo de vulnerabilidades de imágenes:** Integrar herramientas como Snyk o Trivy en el flujo de desarrollo para escanear las imágenes Docker en busca de vulnerabilidades de seguridad.
+  
 ---
 
 ## Posibles Mejoras Adicionales (Para futuros desarrollos)
 
-* **Escaneo de vulnerabilidades de imágenes:** Integrar herramientas como Snyk o Trivy en el flujo de desarrollo para escanear las imágenes Docker en busca de vulnerabilidades de seguridad.
 * **Entornos de prueba y producción:** Crear archivos `docker-compose` específicos para entornos de desarrollo, prueba y producción, permitiendo configuraciones y versiones de servicios diferentes.
 * **Reducción del tamaño de la imagen (documentación):** Aunque ya se usa multistage, se podría documentar el tamaño de la imagen antes y después del multistage para demostrar la reducción.
 * **Logs centralizados avanzados:** Implementar un stack de logging más completo (como Loki + Promtail + Grafana o ELK) para una recolección y análisis centralizado de logs de todos los servicios.
