@@ -189,8 +189,6 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx) están config
 
 ---
 
----
-
 ## Seguridad: Escaneo de Vulnerabilidades con Trivy
 
 Hemos integrado el escaneo de imágenes Docker en busca de vulnerabilidades de seguridad utilizando [Trivy](https://aquasecurity.github.io/trivy/).
@@ -210,6 +208,80 @@ Hemos integrado el escaneo de imágenes Docker en busca de vulnerabilidades de s
 Trivy mostrará una lista de vulnerabilidades encontradas, clasificadas por severidad (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`). Cada entrada incluirá información como el ID de la vulnerabilidad (CVE), la versión instalada del componente vulnerable y la versión corregida si está disponible.
 
 Las vulnerabilidades más críticas (`CRITICAL` y `HIGH`) deben ser priorizadas para su resolución, generalmente actualizando la dependencia o imagen base a una versión que incluya la corrección.
+
+---
+
+## Logs Centralizados con Loki, Promtail y Grafana (LPG Stack)
+
+Hemos implementado un stack completo de observabilidad de logs utilizando Loki, Promtail y Grafana para recolectar, almacenar y visualizar los logs de todos los servicios de la aplicación.
+
+* **Loki:** Sistema de agregación de logs.
+* **Promtail:** Agente de logs que recolecta logs de los contenedores Docker, los etiqueta y los envía a Loki.
+* **Grafana:** Herramienta de visualización para explorar y analizar los logs, junto con las métricas de Prometheus.
+
+### Acceso a Grafana:
+
+Accede a la interfaz de Grafana desde tu navegador:
+
+`http://localhost:3000`
+
+La primera vez, usa las credenciales por defecto `admin`/`admin` y sigue las instrucciones para cambiar la contraseña. Loki y Prometheus ya estarán configurados automáticamente como fuentes de datos.
+
+### Consultando Logs en Grafana:
+
+En Grafana, ve a la sección "Explore" (el icono del telescopio en la barra lateral izquierda) y selecciona "Loki" como fuente de datos. Puedes usar el "Log browser" para seleccionar etiquetas como `job`, `container_id`, `filename` o `stream`, o escribir tus propias consultas LogQL, por ejemplo:
+
+* **Ver todos los logs:**
+    ```logql
+    {job="containerlogs"}
+    ```
+* **Logs específicos de la aplicación Flask:**
+    ```logql
+    {job="containerlogs", container_id=~".*aplicacion-flask.*"}
+    ```
+* **Logs de Nginx:**
+    ```logql
+    {job="containerlogs", container_id=~".*nginx.*"}
+    ```
+* **Logs con un cierto nivel (si tu app loggea niveles en JSON):**
+    ```logql
+    {job="containerlogs", level="error"}
+    ```
+
+---
+
+## Estructura del Proyecto (Actualizado con los nuevos archivos)
+
+* `app.py`: ...
+* `config.py`: ...
+* `Dockerfile`: ...
+* `docker-compose.yml`: ...
+* `init.sql`: ...
+* `nginx.conf`: ...
+* `frontend/`: ...
+* `prometheus.yml`: ...
+* `requirements.txt`: ...
+* **`promtail-config.yml`**: Configuración para el agente de logs Promtail.
+* **`grafana-datasources.yml`**: Configuración para auto-provisionar fuentes de datos en Grafana.
+
+---
+
+## Detalles Técnicos y Configurabilidad (Actualizado con los nuevos servicios)
+
+### ... (secciones existentes) ...
+
+### Logging Centralizado (Loki, Promtail, Grafana)
+
+* **Loki:**
+    * **Puerto interno:** 3100
+    * **Persistencia:** Los logs se almacenan en un volumen Docker llamado `loki_data`.
+* **Promtail:**
+    * **Configuración:** Utiliza `promtail-config.yml` para definir las fuentes de logs y las etiquetas.
+    * **Acceso a logs:** Monta `/var/lib/docker/containers` y `/var/run/docker.sock` para recolectar logs de todos los contenedores Docker.
+* **Grafana:**
+    * **Puerto de escucha:** 3000
+    * **Persistencia:** La configuración, los dashboards y los usuarios persisten en el volumen Docker `grafana_data`.
+    * **Auto-configuración:** Usa `grafana-datasources.yml` para configurar automáticamente Loki y Prometheus como fuentes de datos al inicio.
 
 ---
 
