@@ -1,0 +1,43 @@
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push 
+
+scrape_configs:
+  - job_name: docker-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: containerlogs 
+          __path__: /var/lib/docker/containers/*/*log 
+
+    pipeline_stages: 
+      - docker: {} 
+      - drop:
+          expression: ".*_tmp" 
+      - regex: 
+          expression: "/var/lib/docker/containers/(?P<container_id>.*)/(?P<filename>.*log)"
+      - json:
+          expressions:
+            stream: stream
+            log: log
+      - json: 
+          expressions:
+            level: level
+            component: component
+          drop_field_if_not_exists: true 
+      - labels: 
+          container_id:
+          filename:
+          stream:
+          level:
+          component: 
+      - output:
+          source: log 
