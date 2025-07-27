@@ -247,23 +247,6 @@ En Grafana, ve a la sección "Explore" (el icono del telescopio en la barra late
     ```logql
     {job="containerlogs", level="error"}
     ```
-
----
-
-## Estructura del Proyecto (Actualizado con los nuevos archivos)
-
-* `app.py`: ...
-* `config.py`: ...
-* `Dockerfile`: ...
-* `docker-compose.yml`: ...
-* `init.sql`: ...
-* `nginx.conf`: ...
-* `frontend/`: ...
-* `prometheus.yml`: ...
-* `requirements.txt`: ...
-* **`promtail-config.yml`**: Configuración para el agente de logs Promtail.
-* **`grafana-datasources.yml`**: Configuración para auto-provisionar fuentes de datos en Grafana.
-
 ---
 
 ## Detalles Técnicos y Configurabilidad (Actualizado con los nuevos servicios)
@@ -294,6 +277,7 @@ En Grafana, ve a la sección "Explore" (el icono del telescopio en la barra late
 * **Despliegue de Portainer:** Incluido en `docker-compose.yml` para una gestión visual de los contenedores Docker.
 * **Subida de imagen a Docker Hub:** La imagen de `aplicacion-flask` se ha subido a Docker Hub ([https://hub.docker.com/repository/docker/orejasperez/aplicacion-flask/general](https://hub.docker.com/repository/docker/orejasperez/aplicacion-flask/general)). Esto se realiza para cumplir con los requisitos de la práctica, sin embargo, el `docker-compose.yml` local sigue utilizando la construcción de la imagen desde el Dockerfile (`build: .`) y no hace referencia a la imagen de Docker Hub.
 * **Escaneo de vulnerabilidades de imágenes:** Integrar herramientas como Snyk o Trivy en el flujo de desarrollo para escanear las imágenes Docker en busca de vulnerabilidades de seguridad.
+* **Logs centralizados avanzados:** Implementar un stack de logging más completo (como Loki + Promtail + Grafana o ELK) para una recolección y análisis centralizado de logs de todos los servicios.
   
 ---
 
@@ -301,7 +285,6 @@ En Grafana, ve a la sección "Explore" (el icono del telescopio en la barra late
 
 * **Entornos de prueba y producción:** Crear archivos `docker-compose` específicos para entornos de desarrollo, prueba y producción, permitiendo configuraciones y versiones de servicios diferentes.
 * **Reducción del tamaño de la imagen (documentación):** Aunque ya se usa multistage, se podría documentar el tamaño de la imagen antes y después del multistage para demostrar la reducción.
-* **Logs centralizados avanzados:** Implementar un stack de logging más completo (como Loki + Promtail + Grafana o ELK) para una recolección y análisis centralizado de logs de todos los servicios.
 
 ---
 
