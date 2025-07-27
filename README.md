@@ -151,9 +151,7 @@ Sigue estos pasos para poner la aplicación en funcionamiento en tu máquina loc
 
 * **Puerto:** 9090
 * **Objetivos:** Raspa las métricas del servicio `aplicacion-flask:5010`.
-* **Métricas disponibles (ejemplos):**
-    * `flask_http_requests_total`: Contador de peticiones HTTP por método, ruta y código de estado.
-    * `flask_http_request_duration_seconds_bucket/count/sum`: Métricas de duración de peticiones HTTP.
+* **Métricas disponibles (ejemplos):**    
     * `aplicacion_visitas_total`: **Métrica personalizada** que expone el valor actual del contador de visitas.
 
 ### Gestión con Portainer
