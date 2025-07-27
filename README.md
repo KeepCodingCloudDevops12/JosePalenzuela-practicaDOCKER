@@ -191,7 +191,7 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx) están config
 
 ---
 
-## Puntos Extra Implementados (¡Logrados!)
+## Puntos Extra Implementados
 
 * **Monitorización con Prometheus:** Integrado para recolectar métricas de la aplicación Flask.
 * **Multistage Build en Dockerfile:** Reduce significativamente el tamaño de la imagen final de la aplicación Flask.
@@ -213,7 +213,7 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx) están config
 
 ## Autor
 
-José María Palenzuela Plaza ([jpalenz77](https://github.com/jpalenz77))
+Jose María Palenzuela Plaza ([jpalenz77](https://github.com/jpalenz77))
 
 ---
 
