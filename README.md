@@ -45,7 +45,7 @@ La aplicación expone los siguientes endpoints a través de Nginx (`http://local
     * **Función:** Reinicia el contador a cero.
 
 * **`GET /metrics`**
-    * **Función:** Expone las métricas de Prometheus de la aplicación Flask (ej. `flask_http_requests_total`, `aplicacion_visitas_total`). Accesible directamente a través de Nginx.
+    * **Función:** Expone las métricas de Prometheus de la aplicación Flask (ej. `aplicacion_visitas_total`). Accesible directamente a través de Nginx.
 
 ---
 
