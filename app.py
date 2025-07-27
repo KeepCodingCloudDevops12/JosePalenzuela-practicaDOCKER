@@ -4,9 +4,14 @@ import psycopg2
 from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS
 
 from prometheus_flask_exporter import PrometheusMetrics
+from prometheus_client import Gauge 
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
+
+
+VISITAS_COUNT = Gauge('aplicacion_visitas_total', 'Total number of visits to the application')
+
 
 def get_conn():
     return psycopg2.connect(
@@ -18,7 +23,7 @@ def get_conn():
     )
 
 @app.route('/')
-def index_text(): 
+def index_text():
     conn = get_conn()
     cur = conn.cursor()
     cur.execute('UPDATE contador SET visitas = visitas + 1 RETURNING visitas;')
@@ -26,6 +31,10 @@ def index_text():
     conn.commit()
     cur.close()
     conn.close()
+    
+    
+    VISITAS_COUNT.set(count)
+    
     return f'Número de visitas: {count}'
 
 @app.route('/reset')
@@ -36,6 +45,10 @@ def reset():
     conn.commit()
     cur.close()
     conn.close()
+    
+    
+    VISITAS_COUNT.set(0)
+    
     return 'Contador reiniciado.'
 
 @app.route('/api/increment')
@@ -47,7 +60,11 @@ def api_increment():
     conn.commit()
     cur.close()
     conn.close()
-    return jsonify({'visitas_incrementadas': count}) # Retorna JSON
+    
+    
+    VISITAS_COUNT.set(count)
+    
+    return jsonify({'visitas_incrementadas': count}) 
 
 @app.route('/api/contador')
 def api_contador():
@@ -57,6 +74,10 @@ def api_contador():
     count = cur.fetchone()[0]
     cur.close()
     conn.close()
+    
+    
+    VISITAS_COUNT.set(count)
+    
     return jsonify({'visitas': count})
 
 

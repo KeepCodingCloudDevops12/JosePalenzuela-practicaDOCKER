@@ -94,7 +94,7 @@ Sigue estos pasos para poner la aplicación en funcionamiento en tu máquina loc
         ```
         http://localhost:9090
         ```
-        En la barra de búsqueda, puedes probar queries como `flask_http_requests_total` o `aplicacion_visitas_total`.
+        En la barra de búsqueda, puedes probar queries como `aplicacion_visitas_total`.
 
     * **Portainer (Interfaz de gestión de Docker):** Accede a la interfaz de Portainer:
         ```
