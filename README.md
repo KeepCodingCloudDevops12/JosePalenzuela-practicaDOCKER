@@ -65,7 +65,7 @@ Sigue estos pasos para poner la aplicación en funcionamiento en tu máquina loc
 
 1.  **Clona el repositorio:**
     ```bash
-    git clone https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git
+    git clone [https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git](https://github.com/KeepCodingCloudDevops12/JosePalenzuela-practicaDOCKER.git)
     cd JosePalenzuela-practicaDOCKER
     ```
 
@@ -134,7 +134,7 @@ Sigue estos pasos para poner la aplicación en funcionamiento en tu máquina loc
 
 * **Puerto interno:** 5010
 * **Servidor web:** La aplicación es servida por `Gunicorn` para mayor robustez y eficiencia.
-* **Variables de Entorno para la Conexión a la BBDD:** La aplicación es altamente configurable a través de variables de entorno, definidas en `docker-compose.yml` para el servicio `aplicacion-flask`:
+* **Variables de Entorno para la Conexión a la BBDD:** La configuración de la base de datos se gestiona completamente a través de variables de entorno, definidas en `docker-compose.yml` para el servicio `aplicacion-flask`:
     * `DB_HOST`: Host de la base de datos (por defecto: `aplicacion-postgres`, que es el nombre del servicio en Docker Compose).
     * `DB_PORT`: Puerto de la base de datos (por defecto: `5432`).
     * `DB_NAME`: Nombre de la base de datos (por defecto: `aplicaciondb`).
@@ -151,7 +151,7 @@ Sigue estos pasos para poner la aplicación en funcionamiento en tu máquina loc
 
 * **Puerto:** 9090
 * **Objetivos:** Raspa las métricas del servicio `aplicacion-flask:5010`.
-* **Métricas disponibles (ejemplos):**    
+* **Métricas disponibles (ejemplos):**
     * `aplicacion_visitas_total`: **Métrica personalizada** que expone el valor actual del contador de visitas.
 
 ### Gestión con Portainer
@@ -167,10 +167,10 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx) están config
 
 * **Consulta de Logs:** Puedes ver los logs en tiempo real o históricos para cualquier servicio usando `docker compose logs`:
     ```bash
-    docker compose logs -f aplicacion-flask   # Logs de Flask en tiempo real
-    docker compose logs aplicacion-postgres    # Logs históricos de PostgreSQL
-    docker compose logs -f nginx             # Logs de Nginx en tiempo real
-    docker compose logs -f                   # Todos los logs de todos los servicios en tiempo real
+    docker compose logs -f aplicacion-flask     # Logs de Flask en tiempo real
+    docker compose logs aplicacion-postgres      # Logs históricos de PostgreSQL
+    docker compose logs -f nginx               # Logs de Nginx en tiempo real
+    docker compose logs -f                     # Todos los logs de todos los servicios en tiempo real
     ```
 
 * **Formato JSON [OPCIONAL]:**
@@ -196,12 +196,12 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx) están config
 * **Frontend más bonito con Nginx:** El proyecto incluye un frontend HTML/CSS/JS servido por Nginx para una interfaz de usuario más completa y visual.
 * **Uso de variables de entorno para accesos a BBDD:** La configuración de la base de datos se gestiona completamente a través de variables de entorno para mayor flexibilidad.
 * **Despliegue de Portainer:** Incluido en `docker-compose.yml` para una gestión visual de los contenedores Docker.
+* **Subida de imagen a Docker Hub:** La imagen de `aplicacion-flask` se ha subido a Docker Hub ([https://hub.docker.com/repository/docker/orejasperez/aplicacion-flask/general](https://hub.docker.com/repository/docker/orejasperez/aplicacion-flask/general)). Esto se realiza para cumplir con los requisitos de la práctica, sin embargo, el `docker-compose.yml` local sigue utilizando la construcción de la imagen desde el Dockerfile (`build: .`) y no hace referencia a la imagen de Docker Hub.
 
 ---
 
 ## Posibles Mejoras Adicionales (Para futuros desarrollos)
 
-* **Subir la imagen a Docker Hub:** Publicar la imagen de `aplicacion-flask` en Docker Hub para que sea accesible públicamente, y referenciarla en el `docker-compose.yml`.
 * **Escaneo de vulnerabilidades de imágenes:** Integrar herramientas como Snyk o Trivy en el flujo de desarrollo para escanear las imágenes Docker en busca de vulnerabilidades de seguridad.
 * **Entornos de prueba y producción:** Crear archivos `docker-compose` específicos para entornos de desarrollo, prueba y producción, permitiendo configuraciones y versiones de servicios diferentes.
 * **Reducción del tamaño de la imagen (documentación):** Aunque ya se usa multistage, se podría documentar el tamaño de la imagen antes y después del multistage para demostrar la reducción.
