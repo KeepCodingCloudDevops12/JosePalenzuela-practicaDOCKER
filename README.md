@@ -249,9 +249,7 @@ En Grafana, ve a la sección "Explore" (el icono del telescopio en la barra late
     ```
 ---
 
-## Detalles Técnicos y Configurabilidad (Actualizado con los nuevos servicios)
-
-### ... (secciones existentes) ...
+## Detalles Técnicos y Configurabilidad de Grafana, Loki y Promtail
 
 ### Logging Centralizado (Loki, Promtail, Grafana)
 
