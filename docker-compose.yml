@@ -5,10 +5,12 @@ networks:
 services:
   aplicacion-postgres:
     image: postgres:15
+    container_name: postgres
     environment:
       POSTGRES_USER: chema
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: aplicaciondb
+      TZ: Europe/Madrid
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -20,6 +22,7 @@ services:
   aplicacion-flask:
     build: .
     image: aplicacion-flask
+    container_name: aplicacion-flask
     depends_on:
       - aplicacion-postgres
     environment:
@@ -28,6 +31,7 @@ services:
       DB_NAME: aplicaciondb
       DB_USER: chema
       DB_PASS: admin123
+      TZ: Europe/Madrid
     ports:
       - "5010:5010"
     networks: 
@@ -35,6 +39,9 @@ services:
 
   nginx:
     image: nginx:alpine
+    container_name: nginx
+    environment:
+      TZ: Europe/Madrid
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./frontend:/usr/share/nginx/html:ro
@@ -47,6 +54,9 @@ services:
 
   prometheus:
     image: prom/prometheus
+    container_name: prometheus
+    environment:
+      TZ: Europe/Madrid
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     command:
@@ -60,17 +70,23 @@ services:
 
   portainer:
     image: portainer/portainer-ce:latest
+    container_name: portainer
+    environment:
+      TZ: Europe/Madrid
     command: -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
       - portainer_data:/data
     ports:
       - "9000:9000"
-    networks: #
+    networks: 
       - aplicacion_red
   
   loki:
     image: grafana/loki:2.9.0 
+    environment:
+      TZ: Europe/Madrid
+    container_name: loki
     ports:
       - "3100:3100" 
     volumes:
@@ -81,11 +97,14 @@ services:
 
   promtail:
     image: grafana/promtail:2.9.0 
+    container_name: promtail
+    environment:
+      TZ: Europe/Madrid
     volumes:
       - ./promtail-config.yml:/etc/promtail/config.yml:ro 
       - /var/lib/docker/containers:/var/lib/docker/containers:ro 
       - /var/run/docker.sock:/var/run/docker.sock:ro 
-    command: -config.file=/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml -config.expand-env=true
     depends_on:
       - loki 
     networks:
@@ -93,6 +112,9 @@ services:
 
   grafana:
     image: grafana/grafana:10.4.2 
+    container_name: grafana
+    environment:
+      TZ: Europe/Madrid
     ports:
       - "3000:3000" 
     volumes:

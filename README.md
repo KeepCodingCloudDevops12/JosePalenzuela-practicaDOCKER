@@ -99,17 +99,19 @@ Sigue estos pasos para poner la aplicación en funcionamiento en tu máquina loc
         ```
         En la barra de búsqueda, puedes probar queries como `aplicacion_visitas_total`.
 
-    * **Logs Centralizados con Grafana:** Accede a la interfaz de Grafana:
+    * **Explorando Datos en Grafana (Logs y Métricas):** Accede a la interfaz de Grafana:
         ```
         http://localhost:3000
         ```
-        La primera vez, usa las credenciales por defecto `admin`/`admin` (se te pedirá cambiarlas). En la sección "Explore" (icono del telescopio), selecciona la fuente de datos "Loki" para consultar logs.
+        La primera vez, usa las credenciales por defecto `admin`/`admin` (se te pedirá cambiarlas).
+        * Para **consultar logs:** Ve a la sección "Explore" (icono del telescopio) y selecciona la fuente de datos "Loki". Puedes usar el "Log browser" para filtrar por etiquetas (ej. `{job="containerlogs", container_id=~".*aplicacion-flask.*"}`).
+        * Para **consultar métricas:** En la misma sección "Explore", selecciona la fuente de datos "Prometheus". Puedes introducir consultas como `aplicacion_visitas_total` para visualizar la métrica del contador.
 
     * **Gestión de Docker con Portainer:** Accede a la interfaz de Portainer:
         ```
         http://localhost:9000
         ```
-        La primera vez, se te pedirá crear una cuenta de administrador. Una vez configurado, podrás visualizar y gestionar todos tus contenedores. La configuración de Portainer (incluyendo usuarios) persiste gracias a un volumen Docker.
+        La primera vez, se te pedirá crear una cuenta de administrador. **Es crucial establecer una contraseña segura para Portainer.** Si en algún momento necesitas restablecer el acceso o la seguridad (por ejemplo, tras perder el volumen de datos o por motivos de seguridad), puedes re-inicializar Portainer deteniendo el servicio (`docker compose stop portainer`), eliminando el volumen `portainer_data` (`docker volume rm [nombre_del_proyecto]_portainer_data`) y levantándolo de nuevo (`docker compose up -d portainer`). Una vez configurado, podrás visualizar y gestionar todos los contenedores. La configuración de Portainer (incluyendo usuarios) persiste gracias a un volumen.
 
 ---
 
@@ -203,7 +205,7 @@ Todos los componentes de la aplicación (Flask, PostgreSQL, Nginx, etc.) están 
     docker compose logs -f nginx                   # Logs de Nginx en tiempo real
     docker compose logs -f                         # Todos los logs de todos los servicios en tiempo real
     ```
-* **Análisis Avanzado:** Para un análisis más profundo, filtrado por etiquetas, y visualización, se recomienda utilizar la interfaz de **Grafana** configurada con **Loki** (ver sección "Logs Centralizados").
+* **Análisis Avanzado:** Para un análisis más profundo, filtrado por etiquetas, y visualización, se recomienda utilizar la interfaz de **Grafana** configurada con **Loki** (ver sección "Explorando Datos en Grafana").
 
 ---
 
