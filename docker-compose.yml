@@ -91,8 +91,9 @@ services:
     ports:
       - "3100:3100" 
     volumes:
+      - ./loki.yml:/etc/loki/loki.yml:ro
       - loki_data:/loki 
-    command: -config.file=/etc/loki/local-config.yaml 
+    command: -config.file=/etc/loki/loki.yml -config.expand-env=true
     networks:
       - aplicacion_red
 
