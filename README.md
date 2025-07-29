@@ -223,6 +223,12 @@ Hemos integrado el escaneo de imágenes Docker en busca de vulnerabilidades de s
     ```
     Esto escaneará la imagen base (`python:3.10-slim-bookworm`) y todas las dependencias instaladas dentro de tu aplicación en busca de vulnerabilidades conocidas.
 
+### Resultados del escaneo:
+
+Aquí se muestra un ejemplo del resultado del escaneo de la imagen `aplicacion-flask:latest` utilizando Trivy:
+
+![Resultado del Escaneo de Trivy](resultadostrivy.png)
+
 ### Interpretación de los Resultados:
 
 Trivy mostrará una lista de vulnerabilidades encontradas, clasificadas por severidad (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`). Cada entrada incluirá información como el ID de la vulnerabilidad (CVE), la versión instalada del componente vulnerable y la versión corregida si está disponible.
